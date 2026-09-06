@@ -1,12 +1,22 @@
 Rails.application.routes.draw do
+  # Renderのデフォルトドメイン。ここへのアクセスは独自ドメインへ301リダイレクトする(#237)
+  onrender_host = "makasete-calo-gohan.onrender.com"
+  canonical_host = "makasete-calo-gohan.toma15.com"
+
+  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
+  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  # ヘルスチェックはRenderの死活監視が使うため、下のリダイレクトより先に定義してリダイレクト対象から除外する
+  get "up" => "rails/health#show", as: :rails_health_check
+
+  # onrender.comへのアクセスはすべて独自ドメインへ301(恒久的)リダイレクトする
+  constraints(host: onrender_host) do
+    match "(*path)", to: redirect { |_params, req| "https://#{canonical_host}#{req.fullpath}" }, via: :all
+  end
+
   devise_for :users, controllers: { registrations: "users/registrations" }
   # ゲストログイン（アカウント自動生成＋ログイン）
   post "guest_login", to: "guest_sessions#create", as: :guest_login
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
 
   # Render dynamic PWA files from app/views/pwa/*
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
