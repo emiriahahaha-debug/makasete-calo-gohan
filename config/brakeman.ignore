@@ -3,20 +3,22 @@
     {
       "warning_type": "Unmaintained Dependency",
       "warning_code": 122,
-      "fingerprint": "21ab0fe00fdd5899ffc405cff75aadb91b805ee996a614f7e27b08a287e9062d",
+      "fingerprint": "98b26f60d776fd41ee6f088c833725145be9aac2d7c5b33780241c273622db42",
       "check_name": "EOLRails",
       "message": "Support for Rails 8.0.5.1 ends on 2026-10-07",
       "file": "Gemfile.lock",
-      "line": 486,
+      "line": 542,
       "link": "https://brakemanscanner.org/docs/warning_types/unmaintained_dependency/",
       "code": null,
       "render_path": null,
       "location": null,
       "user_input": null,
-      "confidence": "Weak",
-      "note": "実際の脆弱性ではなくRailsのEOLカレンダー通知のため無視。Rails 8アップグレード計画あり（次期アップグレード時に再確認する）"
+      "confidence": "Medium",
+      "cwe_id": [
+        1104
+      ],
+      "note": "実際の脆弱性ではなくRailsのEOLカレンダー通知のため無視。Rails 8.0系は2026-10-07にサポート終了予定のため、次期マイナーバージョン（Rails 8.1以降）へのアップグレードを別途検討する"
     }
   ],
-  "updated": "2026-08-14 05:46:26 UTC",
   "brakeman_version": "8.0.4"
 }
